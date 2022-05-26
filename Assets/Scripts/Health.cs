@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-        public int initialHealth;
+        public int maxHealth;
         public int currHealth;
+
+        public int maxShield;
+        public int currShield;
         private bool vulnerable;
+        public float invulnerabilityTime;
         void Start()
         {
-                currHealth = initialHealth;
+                currHealth = maxHealth;
+                currShield = maxShield;
                 vulnerable = true;
         }
 
@@ -17,25 +22,49 @@ public class Health : MonoBehaviour
         {
                 if (vulnerable)
                 {
-                        if (currHealth - damage <= 0)
+                        if (currShield > 0)
                         {
-                                currHealth = 0;
-                                Die();
+                                DamageCalcShield(damage);
                         }
                         else
                         {
-                                currHealth -= damage;
-                                Invulnerable(2);
+                                DamageCalcHealth(damage);
                         }
                 }
-
-
-
         }
-        private void Invulnerable(float time)
+
+        private void DamageCalcHealth(int damage)
+        {
+                if (currHealth - damage <= 0)
+                {
+                        currHealth = 0;
+                        Die();
+                }
+                else
+                {
+                        currHealth -= damage;
+                        Invulnerable();
+                }
+        }
+
+        private void DamageCalcShield(int damage)
+        {
+                if (currShield - damage <= 0)
+                {
+                        int damageToHealth = damage - currShield;
+                        currShield = 0;
+                        DamageCalcHealth(damageToHealth);
+                }
+                else
+                {
+                        currShield -= damage;
+                        Invulnerable();
+                }
+        }
+        private void Invulnerable()
         {
                 vulnerable = false;
-                Invoke("Vulnerable", time);
+                Invoke("Vulnerable", invulnerabilityTime);
         }
 
         private void Vulnerable()
