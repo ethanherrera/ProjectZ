@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponSO : ScriptableObject
 {
         public Sprite sprite;
+        public GameObject weaponPrefab;
         public GameObject bulletPrefab;
         public float bulletForce = 20f;
         public int damage;

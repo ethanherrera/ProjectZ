@@ -18,7 +18,8 @@ public class GunMechanics : MonoBehaviour
         }
         private void Update()
         {
-                MyInput();
+                if (transform.parent.name == "EquippedWeapon")
+                        MyInput();
         }
         private void MyInput()
         {

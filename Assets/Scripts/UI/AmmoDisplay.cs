@@ -20,8 +20,16 @@ public class AmmoDisplay : MonoBehaviour
         void Update()
         {
                 currWeaponScript = inventoryScript.equippedItem.GetComponent<GunMechanics>();
-                bulletsLeft = currWeaponScript.bulletsLeft;
-                totalBulletsLeft = currWeaponScript.totalBulletsLeft;
-                ammoDisplay.text = bulletsLeft.ToString() + "/" + totalBulletsLeft.ToString();
+                if (currWeaponScript == null)
+                {
+                        ammoDisplay.text = "Fists";
+                }
+                else
+                {
+                        bulletsLeft = currWeaponScript.bulletsLeft;
+                        totalBulletsLeft = currWeaponScript.totalBulletsLeft;
+                        ammoDisplay.text = bulletsLeft.ToString() + "/" + totalBulletsLeft.ToString();
+                }
+
         }
 }
